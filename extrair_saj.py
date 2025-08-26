@@ -42,7 +42,6 @@ def main():
 
     print("OCR concluído.")
     print(f"Texto salvo em: {out_txt}")
-    print(f"Word salvo em: {out_docx} (texto copiável/editável)")
     print(f"PDF com OCR salvo em: {ocr_pdf}")
 
 
