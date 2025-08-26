@@ -1,0 +1,6 @@
+.idea
+.vscode
+.env
+docker-compose.yml
+*.pdf
+saida.txt
