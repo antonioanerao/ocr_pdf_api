@@ -1,13 +1,13 @@
 # OCR arquivos do SAJ
 
 ### MacOS
-qpdf
-poppler
-ocrmypdf
-tesseract
+qpdf<br>
+poppler<br>
+ocrmypdf<br>
+tesseract<br>
 tesseract-lang
 
-Instalacao
+#### Instalacao
 
 ```bash
 brew install qpdf poppler ocrmypdf tesseract tesseract-lang
@@ -15,12 +15,14 @@ brew install qpdf poppler ocrmypdf tesseract tesseract-lang
 
 ### Linux (Debian/Ubuntu)
 
-qpdf
-poppler-utils
-ocrmypdf
-tesseract-ocr
-tesseract-ocr-por
+qpdf<br>
+poppler-utils<br>
+ocrmypdf<br>
+tesseract-ocr<br>
+tesseract-ocr-por<br>
 tesseract-ocr-eng
+
+#### Instalacao
 
 ```bash
 sudo apt update
