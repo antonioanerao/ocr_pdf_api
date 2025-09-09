@@ -9,6 +9,11 @@ from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pypdf import PdfReader
+from dotenv import load_dotenv
+import os
+
+load_dotenv()  # Lê as variáveis do .env
+
 
 app = FastAPI(title="OCR API", version="1.2.0")
 app.add_middleware(
@@ -108,3 +113,13 @@ async def ocr_endpoint(
         raise HTTPException(status_code=500, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro inesperado: {e}")
+
+# Criando a rota index
+app = FastAPI()
+
+@app.get("/")
+async def index():
+    return {
+        "status": "success",
+        "message": f"Bem-vindo à aplicação {os.getenv('APP_NAME')} v{os.getenv('APP_VERSION')}"
+    }
