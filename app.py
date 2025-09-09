@@ -12,7 +12,7 @@ from pypdf import PdfReader
 from dotenv import load_dotenv
 import os
 
-load_dotenv()  # lê as variáveis do .env
+load_dotenv()  # Lê as variáveis do .env
 
 
 app = FastAPI(title="OCR API", version="1.2.0")
