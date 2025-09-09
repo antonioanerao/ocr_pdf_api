@@ -30,6 +30,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 # Copia o código da API (ajuste se tiver mais arquivos)
 COPY app.py /app/app.py
+COPY .env /app/.env
 
 # Exponha a porta do Uvicorn
 EXPOSE 8000
