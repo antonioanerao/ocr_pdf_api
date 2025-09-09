@@ -4,3 +4,4 @@
 docker-compose.yml
 *.pdf
 saida.txt
+__pycache__/
