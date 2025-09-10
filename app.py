@@ -24,6 +24,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 def extract_text_with_pypdf(pdf_path: Path) -> str:
     reader = PdfReader(str(pdf_path))
     texts = []
@@ -114,9 +115,10 @@ async def ocr_endpoint(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro inesperado: {e}")
 
+
 @app.get("/")
 async def index():
     return {
         "status": "success",
-        "message": f"Bem-vindo à aplicação {os.getenv('APP_NAME')} v{os.getenv('APP_VERSION')}"
+        "message": f"{os.getenv('APP_NAME')} - v{os.getenv('APP_VERSION')}"
     }
