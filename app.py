@@ -114,9 +114,6 @@ async def ocr_endpoint(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro inesperado: {e}")
 
-# Criando a rota index
-app = FastAPI()
-
 @app.get("/")
 async def index():
     return {
