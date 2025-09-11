@@ -8,7 +8,7 @@ body:
       attributes:
           label: O que houve?
           description: Explique claramente o que ocorreu e qual o comportamento esperado.
-          placeholder: Ex: Ao chamar o endpoint /ocr, recebo 500 em vez de 200...
+          placeholder: Exemplo > Ao chamar o endpoint /ocr, recebo 500 em vez de 200...
       validations:
           required: true
     - type: textarea
