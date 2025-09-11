@@ -1,0 +1,43 @@
+name: Reportar Bug
+description: Reportar um erro de comportamento ou bug do código
+title: "[Bug]: "
+labels: ["bug"]
+body:
+    - type: textarea
+      id: o-que-houve
+      attributes:
+          label: O que houve?
+          description: Explique claramente o que ocorreu e qual o comportamento esperado.
+          placeholder: Ex: Ao chamar o endpoint /ocr, recebo 500 em vez de 200...
+      validations:
+          required: true
+    - type: textarea
+      id: como-reproduzir
+      attributes:
+          label: Como reproduzir o erro/bug
+          description: Descreva detalhadamente o passo a passo para o erro acontecer
+          placeholder: |
+          1. Configurar ambiente com Python 3.11
+          2. Rodar `uvicorn main:app`
+          3. Fazer requisição POST para /ocr
+      validations:
+          required: true
+    - type: dropdown
+      id: versao_python
+      attributes:
+        label: Qual a versão do Python você está usando?
+        description: Selecione as versões testadas
+        multiple: true
+        options:
+        - Python 3.7
+        - Python 3.8
+        - Python 3.9
+        - Python 3.10
+        - Python >= 3.11
+    - type: textarea
+      id: notas
+      attributes:
+          label: Informações Adicionais
+          description: Insira qualquer outra informação relevante relacionada ao erro/bug
+      validations:
+          required: false
