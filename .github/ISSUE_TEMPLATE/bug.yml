@@ -16,10 +16,6 @@ body:
       attributes:
           label: Como reproduzir o erro/bug
           description: Descreva detalhadamente o passo a passo para o erro acontecer
-          placeholder: |
-          1. Configurar ambiente com Python 3.11
-          2. Rodar `uvicorn main:app`
-          3. Fazer requisição POST para /ocr
       validations:
           required: true
     - type: dropdown
