@@ -1,0 +1,17 @@
+services:
+  ocr-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ocr-api
+    networks:
+      - proxy
+    ports:
+      - "8000:8000"
+    environment:
+      TZ: "America/Rio_Branco"
+    restart: unless-stopped
+
+networks:
+  proxy:
+    external: true
