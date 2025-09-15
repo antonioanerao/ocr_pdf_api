@@ -3,3 +3,5 @@ python-dotenv
 uvicorn
 fastapi
 python-multipart
+rq
+redis

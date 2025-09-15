@@ -28,7 +28,9 @@ jobs:
 
       - name: Smoke test container
         run: |
-          docker run --rm -d --name test_app -p 8000:8000 myapp:test
+          docker run -d --name test_app -p 8000:8000 myapp:test
           sleep 10
-          docker ps | grep test_app
+          docker ps -a
           docker logs test_app
+          curl --fail http://localhost:8000/docs
+          docker rm -f test_app
