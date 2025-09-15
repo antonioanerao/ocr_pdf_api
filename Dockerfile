@@ -17,8 +17,9 @@ RUN apt-get update && \
         ghostscript \
         qpdf \
         # utilitários úteis
-        curl ca-certificates && \
-    rm -rf /var/lib/apt/lists/*
+        curl ca-certificates \
+        redis-tools \
+        && rm -rf /var/lib/apt/lists/*
 
 # ========== App ==========
 WORKDIR /app
@@ -30,14 +31,16 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 # Copia o código da API (ajuste se tiver mais arquivos)
 COPY app.py /app/app.py
+COPY worker.py /app/worker.py
+COPY tasks.py /app/tasks.py
 COPY .env /app/.env
 
 # Exponha a porta do Uvicorn
 EXPOSE 8000
 
 # Opcional: usuário sem privilégios
-RUN useradd -m appuser
-USER appuser
+# RUN useradd -m appuser
+# USER appuser
 
 # Healthcheck simples (tente GET /health se você adicionou esse endpoint)
 # HEALTHCHECK --interval=30s --timeout=3s --retries=3 CMD curl -fsS http://localhost:8000/health || exit 1
