@@ -10,12 +10,16 @@ from rq import Queue
 from fastapi.responses import FileResponse
 from tasks import process_ocr_job
 
-load_dotenv()  # Lê as variáveis do .env
+load_dotenv()
 
-app = FastAPI(title="OCR API", version="1.2.0")
+origins_env = os.getenv("APP_ORIGINS", "")
+allowed_origins = [o.strip() for o in origins_env.split(",") if o.strip()]
+
+app = FastAPI(title=os.getenv("APP_NAME"), version=os.getenv("APP_VERSION"))
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:8001",],  # ajuste
+    allow_origins=[allowed_origins],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
