@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 import os
 from redis import Redis
 from rq import Queue
+from fastapi.responses import FileResponse
 from tasks import process_ocr_job
 
 load_dotenv()  # Lê as variáveis do .env
@@ -47,7 +48,13 @@ async def enqueue_ocr(
     with tmp_path.open("wb") as f:
         shutil.copyfileobj(file.file, f)
 
-    job = q.enqueue(process_ocr_job, str(tmp_path), lang, response_type)
+    job = q.enqueue(
+        process_ocr_job,
+        str(tmp_path),
+        lang,
+        response_type,
+        job_timeout=3600
+    )
     return {"task_id": job.get_id(), "status": "queued"}
 
 
@@ -64,6 +71,20 @@ async def job_status(task_id: str):
     if job.is_started:
         return {"status": "processing"}
     if job.is_finished:
-        return {"status": "done", "result": job.result}
+        result = job.result
+        download_url = f"/download/{result['filename_out']}"
+        return {"status": "done", "result": result, "download_url": download_url}
     if job.is_failed:
         return {"status": "failed", "error": str(job.exc_info)}
+
+
+@app.get("/download/{filename}")
+async def download_file(filename: str):
+    file_path = UPLOAD_DIR / filename
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="Arquivo não encontrado")
+    return FileResponse(
+        file_path,
+        media_type="application/pdf",
+        filename=filename
+    )

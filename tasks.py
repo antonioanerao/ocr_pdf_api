@@ -1,10 +1,9 @@
+import os
 import time
-import shutil
 import subprocess
 import tempfile
 from pathlib import Path
 from pypdf import PdfReader
-from fastapi.responses import JSONResponse
 
 
 def extract_text_with_pypdf(pdf_path: Path) -> str:
@@ -43,11 +42,13 @@ def process_ocr_job(file_path: str, lang: str, response_type: str):
     Recebe o caminho do arquivo salvo pelo endpoint.
     """
     start = time.perf_counter()
-    tmpdir = Path(tempfile.mkdtemp())
+
+    shared_dir = Path(os.getenv("UPLOAD_DIR", "/shared_uploads"))
+    shared_dir.mkdir(parents=True, exist_ok=True)
 
     original_path = Path(file_path)
     download_name = f"{original_path.stem}_ocr.pdf"
-    out_pdf = tmpdir / download_name
+    out_pdf = shared_dir / download_name   # <- grava no volume compartilhado
 
     run_ocrmypdf(original_path, out_pdf, lang=lang)
 
@@ -59,16 +60,15 @@ def process_ocr_job(file_path: str, lang: str, response_type: str):
         return {
             "status": "done",
             "filename_in": original_path.name,
-            "filename_out": download_name,
-            "pages": pages,
+            "filename_out": download_name,      # apenas o nome do arquivo
             "elapsed_seconds": elapsed,
+            "pages": pages,
             "text": text_ocr,
         }
     else:
-        # Retorne só o caminho do PDF gerado (poderia mover para storage definitivo)
         return {
             "status": "done",
             "filename_in": original_path.name,
-            "filename_out": str(out_pdf),
+            "filename_out": download_name,
             "elapsed_seconds": elapsed,
         }
