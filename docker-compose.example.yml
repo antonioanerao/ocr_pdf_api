@@ -1,15 +1,6 @@
 version: '3.9'
 
 services:
-  redis:
-    image: redis:7
-    container_name: ocr-redis
-    networks:
-      - proxy
-    restart: unless-stopped
-    volumes:
-      - redis_data:/data
-
   ocr-api:
     build:
       context: .
@@ -33,7 +24,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ocr-worker
     networks:
       - proxy
     environment:
@@ -46,6 +36,20 @@ services:
       - redis
     command: python worker.py
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+      replicas: 3
+
+  redis:
+    image: redis:7
+    container_name: ocr-redis
+    networks:
+      - proxy
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
 
 networks:
   proxy:
