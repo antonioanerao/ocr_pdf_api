@@ -1,6 +1,6 @@
-# OCR arquivos do SAJ
+# OCR arquivos PDF
 
-<a href="https://github.com/mp-ac/ocr_pdf_api/actions"><img src="https://github.com/mp-ac/ocr_pdf_api/actions/workflows/docker-image.yml/badge.svg" alt="Docker Image Build"></a>
+<a href="https://github.com/antonioanerao/ocr_pdf_api/actions"><img src="https://github.com/antonioanerao/ocr_pdf_api/actions/workflows/docker-image.yml/badge.svg" alt="Docker Image Build"></a>
 
 ### MacOS
 qpdf<br>
