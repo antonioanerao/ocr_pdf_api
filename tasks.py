@@ -5,7 +5,6 @@ import tempfile
 from pathlib import Path
 from pypdf import PdfReader
 
-
 def extract_text_with_pypdf(pdf_path: Path) -> str:
     reader = PdfReader(str(pdf_path))
     texts = []

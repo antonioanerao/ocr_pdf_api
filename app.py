@@ -9,6 +9,21 @@ from redis import Redis
 from rq import Queue
 from fastapi.responses import FileResponse
 from tasks import process_ocr_job
+from typing import Any, Optional
+
+
+def resolve_job_id(job: Any | None) -> Optional[str]:
+    """Compatibiliza leitura de id do job entre versões do RQ."""
+    if job is None:
+        return None
+    job_id = getattr(job, "id", None)
+    if job_id:
+        return str(job_id)
+    get_id = getattr(job, "get_id", None)
+    if callable(get_id):
+        return get_id()
+    return None
+
 
 load_dotenv()
 
@@ -57,9 +72,11 @@ async def enqueue_ocr(
         str(tmp_path),
         lang,
         response_type,
-        job_timeout=3600
+        job_timeout=1800
     )
-    return {"task_id": job.get_id(), "status": "queued"}
+
+    job_id = resolve_job_id(job)
+    return {"task_id": job_id, "status": "queued"}
 
 
 @app.get("/status/{task_id}")
